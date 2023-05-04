@@ -1,0 +1,30 @@
+<div class="container mt-4" th:fragment="form(requestFormQuarter, action)">
+    <form th:object="${requestFormQuarter}" th:action="${action}" method="POST">
+        <div class="mb-3">
+            <label class="form-label">Ano do Período</label>
+            <input class="form-control" th:errorclass="is-invalid" type="number" th:field="*{year}">
+            <div class="invalid-feedback" th:errors="*{year}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Semestre</label>
+            <select class="form-select" th:errorclass="is-invalid" th:field="*{statusQuarter}">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+            </select>
+            <div class="invalid-feedback" th:errors="*{statusQuarter}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Início</label>
+            <input class="form-control" th:errorclass="is-invalid" type="date" th:field="*{start}">
+            <div class="invalid-feedback" th:errors="*{start}"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Término</label>
+            <input class="form-control" th:errorclass="is-invalid" type="date" th:field="*{finish}">
+            <div class="invalid-feedback" th:errors="*{finish}"></div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Enviar</button>
+        <a class="btn btn-outline-success" href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i>&nbsp;Voltar</a>
+    </form>
+</div>

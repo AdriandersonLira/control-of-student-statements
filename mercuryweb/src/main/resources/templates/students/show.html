@@ -1,0 +1,89 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts :: head('Listar Estudante')}"></head>
+<body>
+<header th:replace="~{layouts :: header('Estudante #'+${student.id})}"></header>
+
+<main>
+    <div class="container mt-4">
+        <div class="row">
+            <div role="alert" class="alert d-flex align-items-center alert-dismissible fade show" th:if="${message ne null}" th:classappend="${error ? 'alert-danger' : 'alert-success'}">
+                <i class="me-2" th:classappend="${error ? 'fa-solid fa-circle-xmark' : 'fa-solid fa-circle-check'}"></i>
+                <div th:text="${message}"></div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Matrícula</th>
+                            <th scope="col">Instituição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-4" th:text="${student.name}"></td>
+                            <td class="col-2" th:text="${student.registration}"></td>
+                            <td class="col-3" th:text="${student.currentInstitution.toString()}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-3" th:if="${statements.size() > 0}">
+            <h4 class="mt-4">Declarações</h4>
+
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Data</th>
+                            <th scope="col">Observação</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="statement : ${statements}">
+                            <td class="col-3" th:text="${statement.dateGenerate}"></td>
+                            <td class="col-7" th:text="${statement.observation}"></td>
+                            <td class="col-2">
+                                <a class="btn btn-outline-danger" data-bs-toggle="modal" th:attr="data-bs-target='#modal-warning'+${statement.id}"><i class="fa-solid fa-trash"></i></a>
+                                <div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" th:id="modal-warning+${statement.id}" >
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Apagar Declaração</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Tem certeza que deseja apagar a Declaração?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <a class="btn btn-danger" th:href="@{/students/{studentId}/statements/{statementId}/delete(studentId = ${student.id}, statementId = ${statement.id})}"><i class="fa-solid fa-trash"></i>&nbsp;Remover</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="mt-3 mb-5">
+            <div class="col-12">
+                <a class="btn btn-warning" th:href="@{/students/{studentId}/edit(studentId = ${student.id})}"><i class="fa-solid fa-pen"></i>&nbsp;Editar Estudante</a>
+                <a class="btn btn-success" th:href="@{/students/{studentId}/statements/new(studentId = ${student.id})}"><i class="fa-solid fa-plus"></i>&nbsp;Gerar Declaração</a>
+                <a class="btn btn-outline-success" href="/students"><i class="fa-solid fa-arrow-left"></i>&nbsp;Voltar</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts :: head('Listar Instituição')}"></head>
+<body>
+<header th:replace="~{layouts :: header('Instituição #'+${institution.id})}"></header>
+
+<main>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Sigla</th>
+                            <th scope="col">Telefone</th>
+                            <th scope="col">Período</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-4" th:text="${institution.name}"></td>
+                            <td class="col-2" th:text="${institution.acronym}"></td>
+                            <td class="col-3" th:text="${institution.phone}"></td>
+                            <td class="col-3" th:text="${institution.currentQuarter.toString()}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <a class="btn btn-warning" th:href="@{/institutions/{institutionId}/edit(institutionId = ${institution.id})}"><i class="fa-solid fa-pen"></i>&nbsp;Editar</a>
+                <a class="btn btn-outline-success" href="/institutions"><i class="fa-solid fa-arrow-left"></i>&nbsp;Voltar</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
